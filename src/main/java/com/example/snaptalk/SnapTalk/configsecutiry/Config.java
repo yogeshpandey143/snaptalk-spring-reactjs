@@ -8,6 +8,7 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.reactive.EnableWebFluxSecurity;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.www.BasicAuthenticationFilter;
 
 @Configuration
 @EnableWebSecurity
@@ -20,6 +21,7 @@ public class Config {
                   SessionCreationPolicy.STATELESS)).authorizeHttpRequests(
                           Authorize -> Authorize.requestMatchers("/api/**").authenticated()
                                   .anyRequest().permitAll())
+          .addFilterBefore(new jwtValidator(), BasicAuthenticationFilter.class)
           .csrf(csrf-> csrf.disable());
 
   return http.build();
