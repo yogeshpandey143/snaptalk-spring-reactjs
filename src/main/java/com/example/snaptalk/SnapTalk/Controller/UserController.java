@@ -23,11 +23,6 @@ public class UserController {
 
 
 
-    @PostMapping("/user")
-    public User createUser(@RequestBody User user)
-    {
-        return userService.regidterUser(user);
-    }
 
     @GetMapping("/api/user/{userId}")
     public User getUserById(@PathVariable("userId") Integer id){
