@@ -14,8 +14,10 @@ public interface UserService {
 
     public String deleteUser(Integer userId);
 
-    public User updateUser(User user) throws Exception;
+    public User updateUser(User user ,Integer userId) throws Exception;
     public User  followUser(Integer userId1,Integer userId2);
 
     public List<User> serachUser(String query);
+
+    public User findUserByJwt(String jwt);
 }

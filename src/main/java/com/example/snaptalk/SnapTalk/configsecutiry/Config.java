@@ -16,19 +16,31 @@ import org.springframework.security.web.authentication.www.BasicAuthenticationFi
 @EnableWebSecurity
 public class Config {
 
+//@Bean
+//    SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception{
+//  http.sessionManagement(
+//          management -> management.sessionCreationPolicy(
+//                  SessionCreationPolicy.STATELESS)).authorizeHttpRequests(
+//                          Authorize -> Authorize.requestMatchers("/api/**").authenticated()
+//                                  .anyRequest().permitAll())
+//          .addFilterBefore(new jwtValidator(), BasicAuthenticationFilter.class)
+//          .csrf(csrf-> csrf.disable());
+//
+//  return http.build();
+//
+//}
 @Bean
-    SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception{
-  http.sessionManagement(
-          management -> management.sessionCreationPolicy(
-                  SessionCreationPolicy.STATELESS)).authorizeHttpRequests(
-                          Authorize -> Authorize.requestMatchers("/api/**").authenticated()
-                                  .anyRequest().permitAll())
-          .addFilterBefore(new jwtValidator(), BasicAuthenticationFilter.class)
-          .csrf(csrf-> csrf.disable());
+SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+    http.sessionManagement(management -> management.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+            .authorizeHttpRequests(authorize -> authorize
+                    .requestMatchers("/api/**").authenticated()
+                    .anyRequest().permitAll())
+            .addFilterBefore(new jwtValidator(), BasicAuthenticationFilter.class)
+            .csrf(csrf -> csrf.disable());
 
-  return http.build();
-
+    return http.build();
 }
+
 
 
 @Bean

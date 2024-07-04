@@ -1,5 +1,6 @@
 package com.example.snaptalk.SnapTalk.service;
 
+import com.example.snaptalk.SnapTalk.configsecutiry.JwtProvider;
 import com.example.snaptalk.SnapTalk.models.User;
 import com.example.snaptalk.SnapTalk.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,8 +38,8 @@ public class UserServiceImplementation  implements UserService{
 
 
     @Override
-    public User updateUser(User user) throws Exception {
-        Optional<User> prevUser = userRepository.findById(user.getId());
+    public User updateUser(User user ,Integer userId) throws Exception {
+        Optional<User> prevUser = userRepository.findById(userId);
 
 
         if(!prevUser.isPresent())
@@ -60,6 +61,10 @@ public class UserServiceImplementation  implements UserService{
         {
             oldUser.setPassword(user.getPassword());
         }
+        if(user.getEmail()!=null)
+        {
+            oldUser.setEmail(user.getEmail());
+        }
 
         User upadatedUser=userRepository.save(oldUser);
         return upadatedUser;
@@ -74,21 +79,29 @@ public class UserServiceImplementation  implements UserService{
 
 
 
-    @Override
-    public User followUser(Integer userId1, Integer userId2) {
-       User user1 = findUserById(userId1);
+    @Override              //logedin user        other user
+    public User followUser(Integer reqUserId, Integer userId2) {
+       User  reqUser = findUserById(reqUserId);
        User user2  = findUserById(userId2);
-      user2.getFollowers().add(user1.getId());
-      user1.getFollowing().add(user2.getId());
+      user2.getFollowers().add(reqUser.getId());
+      reqUser.getFollowing().add(user2.getId());
 
-      userRepository.save(user1);
+      userRepository.save(reqUser);
         userRepository.save(user2);
-     return user1;
+     return reqUser;
     }
 
 
     @Override
     public List<User> serachUser(String query) {
          return userRepository.searchUser(query);
+    }
+
+    @Override
+    public User findUserByJwt(String jwt){
+      String email = JwtProvider.getEmailFromJwtToken(jwt);
+     User user =userRepository.findByEmail(email);
+
+     return user;
     }
 }

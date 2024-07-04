@@ -38,7 +38,7 @@ public class AuthController {
     private CustomerUserDetailsService customerUserDetailsService;
 
    // /auth/signup
-      @PostMapping("/signin")
+      @PostMapping("/signup")
     public AuthResponse createUser(@RequestBody User user) throws Exception {
 
         User isExist = userRepository.findByEmail(user.getEmail());
