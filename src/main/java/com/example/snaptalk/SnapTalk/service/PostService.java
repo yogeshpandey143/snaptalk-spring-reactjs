@@ -1,28 +1,26 @@
 package com.example.snaptalk.SnapTalk.service;
 
-import com.example.snaptalk.SnapTalk.models.Post;
-import com.example.snaptalk.SnapTalk.repository.PostRepository;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-
 import java.util.List;
 
+import com.example.snaptalk.SnapTalk.exception.PostException;
+import com.example.snaptalk.SnapTalk.exception.UserException;
+import com.example.snaptalk.SnapTalk.model.Post;
 
 
 public interface PostService {
 
-
-
-    Post createPost(Post post , Integer userId)throws Exception;
-    String deletePost(Integer postId,Integer userId) throws Exception;
-
-    List<Post> findPostByUserId(Integer userId);
-
-    Post findPostById(Integer postId) throws Exception;
-
-    List<Post>  findAllPost();
-
-    Post savedPost(Integer postId,Integer userId) throws Exception;
-
-    Post likedPost(Integer postId,Integer userId) throws Exception;
- }
+	public Post createPost(Post post, Integer userId) throws UserException, PostException;
+	
+	public String deletePost(Integer postId, Integer userId) throws UserException,PostException;
+	
+	public List<Post> findPostByUserId(Integer userId) throws UserException;
+	
+	public Post findePostById(Integer postId) throws PostException;
+	
+	public List<Post> findAllPost() throws PostException;
+	
+	public Post savedPost(Integer postId,Integer userId) throws PostException, UserException;
+	
+	public Post likePost(Integer postId ,Integer userId) throws UserException, PostException;
+	
+}

@@ -1,23 +1,30 @@
 package com.example.snaptalk.SnapTalk.service;
 
-import com.example.snaptalk.SnapTalk.models.User;
-
 import java.util.List;
+import java.util.Set;
+
+import com.example.snaptalk.SnapTalk.exception.UserException;
+import com.example.snaptalk.SnapTalk.model.User;
+
 
 public interface UserService {
 
-    public User regidterUser(User user);
+	public User findUserProfileByJwt(String jwt) throws UserException;
 
-    public User findUserById(Integer userId);
+	public User registerUser(User user) throws UserException;
 
-    public User findUserByEmail(String email);
+	public User findUserById(Integer id) throws UserException;
 
-    public String deleteUser(Integer userId);
+	public User findUserByEmail(String email) throws UserException;
 
-    public User updateUser(User user ,Integer userId) throws Exception;
-    public User  followUser(Integer userId1,Integer userId2);
+	public String followUser(Integer reqUserId, Integer followUserId) throws UserException;
 
-    public List<User> serachUser(String query);
+	public List<User> findUsersByUserIds(List<Integer> userIds);
 
-    public User findUserByJwt(String jwt);
+	public Set<User> searchUser(String query) throws UserException;
+
+	public User updateUserDetails(User updatedUser, User existingUser) throws UserException;
+	
+
+
 }
