@@ -68,6 +68,10 @@ public class User {
 	@JsonIgnore
 	@ManyToMany
 	private List<Post> reposts = new ArrayList<>();
+
+	@JsonIgnore
+	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+	private List<Story> stories = new ArrayList<>();
 	
 
 }
